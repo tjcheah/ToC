@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <!-- Latest compiled and minified CSS -->
@@ -9,6 +9,28 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+    div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 180px;
+    }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+
+    div.desc {
+        padding: 15px;
+        text-align: center;
+    }
+</style>
 <head>
     <meta charset="utf-8" />
     <title></title>
@@ -29,17 +51,43 @@
         <div class="tab-content">
             <div id="home" class="tab-pane fade in active" style="margin:auto;">
                 <h3 style="text-align:center;">Theory of Computation</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class="gallery">
+                    <a target="_blank" href="img_forest.jpg">
+                        <img src="img_forest.jpg" width="600" height="400">
+                    </a>
+                    <div class="desc">Leader</div>
+                </div>
+
+                <div class="gallery">
+                    <a target="_blank" href="tati.jpg">
+                        <img src="tati.jpg" width="600" height="400">
+                    </a>
+                    <div class="desc">Tatiana Joanne Cheah (1161104048)</div>
+                </div>
+
+                <div class="gallery">
+                    <a target="_blank" href="img_lights.jpg">
+                        <img src="img_lights.jpg" alt="Northern Lights" width="600" height="400">
+                    </a>
+                    <div class="desc">Add member details here</div>
+                </div>
+
+                <div class="gallery">
+                    <a target="_blank" href="img_mountains.jpg">
+                        <img src="img_mountains.jpg" alt="Mountains" width="600" height="400">
+                    </a>
+                    <div class="desc">Add member details here</div>
+                </div>
             </div>
-            <div id="menu1" class="tab-pane fade">
+            <div id="RgtoNfa" class="tab-pane fade">
                 <h3>Menu 1</h3>
                 <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
-            <div id="menu2" class="tab-pane fade">
+            <div id="NfatoRg" class="tab-pane fade">
                 <h3>Menu 2</h3>
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
             </div>
-            <div id="menu3" class="tab-pane fade">
+            <div id="helpDoc" class="tab-pane fade">
                 <h3>Menu 3</h3>
                 <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
             </div>
