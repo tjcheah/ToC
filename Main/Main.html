@@ -39,6 +39,10 @@
     div.RGinput{
         float:left;
     }
+    div.Checkstrings{
+        margin: 0px 0px 0px 100px;
+        float: left;
+    }
 </style>
 <head>
     <meta charset="utf-8" />
@@ -92,10 +96,18 @@
             </div>
             <div id="RgtoNfa" class="tab-pane fade">
                 <div class="RGinput">
-                    <h5>Regular Grammar(input)</h5>
+                    <h5>Regular Grammar (input)</h5>
                     <textarea name="RG" cols="20" rows="5"></textarea>
+                    <br>
+                    <button id="RGsubmit">Convert RG into NFA</button>
                 </div>
-                
+                <div class="Checkstrings">
+                    <h5>Check String (input)</h5>
+                    <textarea name="RG" cols="20" rows="5"></textarea>
+                    <br>
+                    <button id="Checkstring1">Check</button>
+                </div>
+
             </div>
             <div id="NfatoRg" class="tab-pane fade">
                 <h3>Menu 2</h3>
