@@ -111,88 +111,19 @@
                 </div>
             </div>
             <div id="RgtoNfa" class="tab-pane fade">
-            <!-- Input for RG -->
                 <div class="RGinput">
                     <h5>Regular Grammar (input)</h5>
-                    <table class="table1 table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">State</th>
-                                <th scope="col">Transition</th>
-                                <th colspan="9" style="text-align:center;">Variables</th>
-                            </tr>
-                            <tr>
-                                <td><input type="text" id="s1" maxlength="1" size="1"></td>
-                                <td><p style="text-align:center;">&rarr;</p></td>
-                                <td><input type="text" id="v11" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v12" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v13" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v14" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v15" maxlength="5" size="5"></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" id="s2" maxlength="1" size="1"></td>
-                                <td><p style="text-align:center;">&rarr;</p></td>
-                                <td><input type="text" id="v21" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v22" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v23" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v24" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v25" maxlength="5" size="5"></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" id="s3" maxlength="1" size="1"></td>
-                                <td><p style="text-align:center;">&rarr;</p></td>
-                                <td><input type="text" id="v31" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v32" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v33" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v34" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v35" maxlength="5" size="5"></td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" id="s4" maxlength="1" size="1"></td>
-                                <td><p style="text-align:center;">&rarr;</p></td>
-                                <td><input type="text" id="v41" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v42" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v43" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v44" maxlength="5" size="5"></td>
-                                <td><p style="text-align:center;">&#x7c;</p></td>
-                                <td><input type="text" id="v45" maxlength="5" size="5"></td>
-                            </tr>
-                        </thead>
-                    </table>
-                    <button id="RG_submit" style="margin-top:5px;">Convert RG into NFA</button>
+                    <textarea name="RG" cols="20" rows="5"></textarea>
+                    <br>
+                    <button id="RGsubmit">Convert RG into NFA</button>
                 </div>
                 <div class="Checkstrings">
                     <h5>Check String (input)</h5>
-                    <textarea name="RG" cols="20" rows="5" style="resize:none;"></textarea>
+                    <textarea name="RG" cols="20" rows="5"></textarea>
                     <br>
                     <button id="Checkstring1">Check</button>
                 </div>
-                <br>
-                <br>
-                <br>
-                <br>
-                <script>
-                    $('#RG_submit').click(() => {
-                        console.log("clicked")
-                        var
-                    })
-                </script>
+
             </div>
             <div id="NfatoRg" class="tab-pane fade">
                 <h3>Menu 2</h3>
