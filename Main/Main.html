@@ -39,6 +39,14 @@
             height: auto;
         }
 
+    div.block {
+        margin: 5px 5px 5px 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 192px;
+        display: inline-block;
+    }
+
     div.desc {
         padding: 15px;
         text-align: center;
@@ -72,13 +80,14 @@
             <div id="home" class="tab-pane fade in active" style="text-align:center;">
                 <h3 style="text-align:center;">Theory of Computation</h3>
                 <div class="centerwrapper">
-                    <div class="gallery">
-                        <a target="_blank" href="img_forest.jpg">
-                            <img src="img_forest.jpg" width="600" height="400">
-                        </a>
-                        <div class="desc">Leader</div>
+                    <div class="block">
+                        <div class="gallery">
+                            <a target="_blank" href="img_forest.jpg">
+                                <img src="img_forest.jpg" width="600" height="400">
+                            </a>
+                            <div class="desc">Leader</div>
+                        </div>
                     </div>
-
                     <div class="gallery">
                         <a target="_blank" href="tati.jpg">
                             <img src="tati.jpg" width="600" height="400">
@@ -110,42 +119,58 @@
                             <tr>
                                 <th scope="col">State</th>
                                 <th scope="col">Transition</th>
-                                <th colspan="5" style="text-align:center;">Variables</th>
+                                <th colspan="9" style="text-align:center;">Variables</th>
                             </tr>
                             <tr>
                                 <td><input type="text" id="s1" maxlength="1" size="1"></td>
                                 <td><p style="text-align:center;">&rarr;</p></td>
                                 <td><input type="text" id="v11" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v12" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v13" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v14" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v15" maxlength="5" size="5"></td>
                             </tr>
                             <tr>
                                 <td><input type="text" id="s2" maxlength="1" size="1"></td>
                                 <td><p style="text-align:center;">&rarr;</p></td>
                                 <td><input type="text" id="v21" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v22" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v23" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v24" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v25" maxlength="5" size="5"></td>
                             </tr>
                             <tr>
                                 <td><input type="text" id="s3" maxlength="1" size="1"></td>
                                 <td><p style="text-align:center;">&rarr;</p></td>
                                 <td><input type="text" id="v31" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v32" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v33" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v34" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v35" maxlength="5" size="5"></td>
                             </tr>
                             <tr>
                                 <td><input type="text" id="s4" maxlength="1" size="1"></td>
                                 <td><p style="text-align:center;">&rarr;</p></td>
                                 <td><input type="text" id="v41" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v42" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v43" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v44" maxlength="5" size="5"></td>
+                                <td><p style="text-align:center;">&#x7c;</p></td>
                                 <td><input type="text" id="v45" maxlength="5" size="5"></td>
                             </tr>
                         </thead>
