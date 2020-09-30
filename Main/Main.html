@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
@@ -10,18 +8,21 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
-    table.table1{
+    table.table1 {
         border-collapse: collapse;
     }
-    th, td{
+
+    th, td {
         min-width: 30px;
         padding: 10px;
     }
-    div.centerwrapper{
-        margin-left:auto;
-        margin-right:auto;
-        max-width:800px;
+
+    div.centerwrapper {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 800px;
     }
+
     div.gallery {
         margin: 5px;
         border: 1px solid #ccc;
@@ -51,14 +52,27 @@
         padding: 15px;
         text-align: center;
     }
-    div.RGinput{
-        float:left;
+
+    div.RGinput {
+        float: left;
+        position: fixed;
     }
-    div.Checkstrings{
-        margin: 0px 0px 0px 100px;
+
+    #formal_def {
+        position: relative;
+        margin-top: 250px;
+        float: left;
+        display: inline-block;
+    }
+
+    div.Checkstrings {
+        position: fixed;
+        margin-left: 800px;
         float: left;
     }
 </style>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <title></title>
@@ -111,7 +125,7 @@
                 </div>
             </div>
             <div id="RgtoNfa" class="tab-pane fade">
-            <!-- Input for RG -->
+                <!-- Input for RG -->
                 <div class="RGinput">
                     <h5>Regular Grammar (input)</h5>
                     <table class="table1 table-bordered">
@@ -187,11 +201,114 @@
                 <br>
                 <br>
                 <br>
+                <div id="formal_def"></div>
+                <div id="trans_table"></div>
                 <script>
-                    $('#RG_submit').click(() => {
-                        console.log("clicked")
-                        var
-                    })
+                    $(document).ready(function () {
+                        $('#RG_submit').click(function () {
+                            console.log("clicked")
+                            var check_states = function (a, start, end) {
+                                if (a != start) {
+                                    return a;
+                                }
+                                else if (a === start) {
+                                    a = "> " + a;
+                                    return a;
+                                }
+                                else if (a === end) {
+                                    a = "* " + a;
+                                    return a;
+                                }
+                            }
+
+                            var check_final = function (a, prev) {
+                                if (a != "") {
+                                    return a
+                                }
+                                else {
+                                    return prev
+                                }
+                            }
+                            //determine states
+                            var start = $('#s1').val();
+                            var end = check_final($('#s2').val(), start);
+                            var end = check_final($('#s3').val(), end);
+                            var end = check_final($('#s4').val(), end);
+
+
+                            //for presenting states in transition table
+                            var st1 = check_states($('#s1').val(), start, end);
+                            var st2 = check_states($('#s2').val(), start, end);
+                            var st3 = check_states($('#s3').val(), start, end);
+                            var st4 = check_states($('#s4').val(), start, end);
+
+                            let states = [];
+                            states.push(start, st2, st3, st4);
+                            let list_states = [];
+                            let i = 0;
+                            while (i < 4) {
+                                if (states[i] != "") {
+                                    list_states.push(states[i]);
+                                }
+                                i++;
+                            }
+
+                            //determine alphabets
+                            let list1 = [];
+                            let list2 = [];
+                            let list3 = [];
+                            let alphas = [];
+                            var vtext = "#v";
+                            i = 1;
+                            let j = 1;
+
+                            while (i < 5) {
+                                while (j < 6) {
+                                    list1.push($(vtext + i + j).val());
+                                    j++;
+                                }
+                                i++;
+                                j = 1;
+                            }
+
+                            let x = 0;
+                            let y = 0;
+                            let w = 0;
+                            let found = 0;
+
+                            //looks out for lowercase letters
+                            while (x < 20) {
+                                if (list1[x] != "") {
+                                    list3 = list1[x].split('');
+                                    while (y < list3.length && /[a-z]/.test(list3[y])) {
+                                        while (w <= list2.length) {
+                                            if (list2[w] == list3[y]) {
+                                                found = 1;
+                                            }
+                                            w++;
+                                        }
+                                        if (found == 0) {
+                                            list2.push(list3[y]);
+                                        }
+                                        y++;
+                                        w = 0;
+                                        found = 0;
+                                    }
+                                }
+                                x++;
+                                y = 0;
+                            }
+                            x = 0;
+                            while (x < list2.length) {
+                                alphas.push(list2[x]);
+                                x++;
+                            }
+
+
+
+                            $('#formal_def').append('<p><b>M = (Q, &Sigma;, &delta;, p<sub>0</sub>, F)</b><br>Q ={' + list_states.join(", ") + '}<br>&Sigma; = {' + alphas.join(", ") + '}<br>&delta;: Q &times; &sum;<sub>&epsilon;</sub> &rarr; Pow(Q)<br>p<sub>0</sub> = ' + start + '<br>F = {'+end+'}<p>');
+                        });
+                    });
                 </script>
             </div>
             <div id="NfatoRg" class="tab-pane fade">
