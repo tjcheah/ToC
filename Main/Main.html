@@ -58,7 +58,7 @@
         position: fixed;
     }
 
-    #formal_def {
+    #dynamic_table {
         position: relative;
         margin-top: 250px;
         float: left;
@@ -201,8 +201,16 @@
                 <br>
                 <br>
                 <br>
-                <div id="formal_def"></div>
-                <div id="trans_table"></div>
+                <table id="dynamic_table">
+                    <tr>
+                        <td>
+                            <div id="formal_def"></div>
+                        </td>
+                        <td>
+                            <div id="trans_table"></div>
+                        </td>
+                    </tr>
+                    </table>
                 <script>
                     $(document).ready(function () {
                         $('#RG_submit').click(function () {
@@ -308,6 +316,31 @@
 
 
                             $('#formal_def').append('<p><b>M = (Q, &Sigma;, &delta;, p<sub>0</sub>, F)</b><br>Q ={' + list_states.join(", ") + '}<br>&Sigma; = {' + alphas.join(", ") + '}<br>&delta;: Q &times; &sum;<sub>&epsilon;</sub> &rarr; Pow(Q)<br>p<sub>0</sub> = ' + start + '<br>F = {'+end+'}<p>');
+                            document.getElementById("trans_table").innerHTML = "<table class='table1 table-bordered' id='trans_bordered'></table>";
+
+                            var body = document.body,
+                                tbl  = document.getElementById('trans_bordered');
+
+                            for(var m = 0; m < list_states.length + 1; m++){
+                                var tr = tbl.insertRow();
+                                for(var n = 0; n < alphas.length + 1; n++){
+                                    var td = tr.insertCell();
+                                    if (n >= 1 && m == 0) {
+                                        td.appendChild(document.createTextNode(alphas[n-1]));
+                                    } else if (m != 0 && n == 0) {
+                                        var compare = list_states[m-1];
+                                        if (compare == start) {
+                                            compare = ">" + compare;
+                                        }
+                                        if (compare == end) {
+                                            compare = "*" + compare;
+                                        }
+                                        td.appendChild(document.createTextNode(compare));
+                                    } else {
+                                        td.appendChild(document.createTextNode(m + " + " + n));
+                                    }
+                                }
+                            }
                         });
                     });
                 </script>
