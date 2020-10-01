@@ -316,6 +316,7 @@
 
 
                             $('#formal_def').append('<p><b>M = (Q, &Sigma;, &delta;, p<sub>0</sub>, F)</b><br>Q ={' + list_states.join(", ") + '}<br>&Sigma; = {' + alphas.join(", ") + '}<br>&delta;: Q &times; &sum;<sub>&epsilon;</sub> &rarr; Pow(Q)<br>p<sub>0</sub> = ' + start + '<br>F = {'+end+'}<p>');
+                            //creating dynamic table for NFA
                             document.getElementById("trans_table").innerHTML = "<table class='table1 table-bordered' id='trans_bordered'></table>";
 
                             var body = document.body,
@@ -326,13 +327,17 @@
                                 for(var n = 0; n < alphas.length + 1; n++){
                                     var td = tr.insertCell();
                                     if (n >= 1 && m == 0) {
+                                        // put all the variable to the most top of the table
                                         td.appendChild(document.createTextNode(alphas[n-1]));
                                     } else if (m != 0 && n == 0) {
+                                        // put all the state name to the most left of the table
                                         var compare = list_states[m-1];
                                         if (compare == start) {
+                                            // if the state is the initial state
                                             compare = ">" + compare;
                                         }
                                         if (compare == end) {
+                                            // if the state is the final state
                                             compare = "*" + compare;
                                         }
                                         td.appendChild(document.createTextNode(compare));
