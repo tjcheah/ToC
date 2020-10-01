@@ -207,6 +207,7 @@
                     $(document).ready(function () {
                         $('#RG_submit').click(function () {
                             console.log("clicked")
+                            document.getElementById("formal_def").innerHTML = ""; 
                             var check_states = function (a, start, end) {
                                 if (a != start) {
                                     return a;
