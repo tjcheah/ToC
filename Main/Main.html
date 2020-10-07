@@ -71,6 +71,20 @@
         margin-left: 800px;
         margin-top: 10px;
     }
+    div.RGtoNFAsteps {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 180px;
+        display: inline-block;
+    }
+    div.NFAtoRGsteps {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 180px;
+        display: inline-block;
+    }
 </style>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -275,6 +289,7 @@
                             end = check_final($('#s2').val(), start);
                             end = check_final($('#s3').val(), end);
                             end = check_final($('#s4').val(), end);
+                            let accept_list = [];
 
 
                             //for presenting states in transition table
@@ -365,14 +380,17 @@
                                     }
                                     if (list3[y] == eps) {//add star to a state with epsilon to mark it as accept state
                                         if (x < 5) {
+                                            accept_list.push(st1);
                                             st1 = "*" + st1;
                                             list_states.splice(0, 1, st1);
                                         }
                                         else if (x > 4 && x < 10) {
+                                            accept_list.push(st2);
                                             st2 = "*" + st2;
                                             list_states.splice(1, 1, st2);
                                         }
                                         else if (x > 9 && x < 15) {
+                                            accept_list.push(st3);
                                             st3 = "*" + st3;
                                             list_states.splice(2, 1, st3);
                                         }
@@ -386,12 +404,22 @@
                                 alphas.push(list2[x]);
                                 x++;
                             }
+                            //the accept states for formal function
+                            var got_end = 0;
+                            for (i = 0; i < accept_list.length; i++) {
+                                if (accept_list[i] == end) {
+                                    got_end = 1;
+                                }
+                            }
+                            if (got_end == 0) {
+                                accept_list.push(end);
+                            }
 
                             for (let p = 0; p < combined.length; p++) {
                                 console.log(p + " : " + combined[p].length);
                             }
 
-                            $('#formal_def').append('<p><b>M = (Q, &Sigma;, &delta;, p<sub>0</sub>, F)</b><br>Q ={' + list_states1.join(", ") + '}<br>&Sigma; = {' + alphas.join(", ") + '}<br>&delta;: Q &times; &sum;<sub>&epsilon;</sub> &rarr; Pow(Q)<br>p<sub>0</sub> = ' + start + '<br>F = {' + end + '}<p>');
+                            $('#formal_def').append('<p><b>M = (Q, &Sigma;, &delta;, p<sub>0</sub>, F)</b><br>Q ={' + list_states1.join(", ") + '}<br>&Sigma; = {' + alphas.join(", ") + '}<br>&delta;: Q &times; &sum;<sub>&epsilon;</sub> &rarr; Pow(Q)<br>p<sub>0</sub> = ' + start + '<br>F = {' + accept_list.join(", ") + '}<p>');
                             //creating dynamic table for NFA
                             document.getElementById("trans_table").innerHTML = "<table class='table1 table-bordered' id='trans_bordered'></table>";
 
@@ -577,19 +605,27 @@
             </div>
             <div id="helpDoc" class="tab-pane fade">
                 <div class="RGtoNFAsteps">
-                </div>
-                <div class="RGtoNFAsteps">
+                    <h4>RG -> NFA</h4><br>
+                    <h5><u><b>Steps:</b></u></h5>
+                    <ol>
+                        <li>Enter states under the 'State' column in the Regular Grammar table</li>
+                    </ol>
+                    <h5>Some restrictions applied:</h5>
+                    <b><u>For RG input entry</u></b>
+                    <ul>
+                        <li>No row has a repeated variables (e.g. <u>a</u>A| <u>a</u>B <b>or</b> <u>aa</u>B)</li>
+                        <li>Variable cannot be formatted as 'a' (single lowercase)</li>
+                        <li>Variables can only be in 'aB' (lowercase and uppercase) format or 'A' (single uppercase)</li>
+                    </ul>
+                    <b><u>For RG input entry</u></b>
+                    <ul>
+                        <li>No row has a repeated variables (e.g. <u>a</u>A| <u>a</u>B <b>or</b> <u>aa</u>B)</li>
+                        <li>Variable cannot be formatted as 'a' (single lowercase)</li>
+                        <li>Variables can only be in 'aB' (lowercase and uppercase) format or 'A' (single uppercase)</li>
+                    </ul>
                 </div>
                 <div class="NFAtoRGsteps">
-
                 </div>
-                <h5>Some restrictions applied:</h5>
-                <b><u>For RG to NGA</u></b>
-                <ul>
-                    <li>No row has a repeated variables (e.g. <u>a</u>A| <u>a</u>B <b>or</b> <u>aa</u>B)</li>
-                    <li>Variable cannot be formatted as 'a' (single lowercase)</li>
-                    <li>Variables can only be in 'aB' (lowercase and uppercase) format or 'A' (single uppercase)</li>
-                </ul>
             </div>
         </div>
     </div>
