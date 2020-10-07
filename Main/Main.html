@@ -56,20 +56,20 @@
 
     div.RGinput {
         float: left;
-        position: fixed;
+        position: static;
     }
 
     #dynamic_table {
-        position: relative;
-        margin-top: 250px;
-        float: left;
+        position: static;
+        margin-top: 6px;
+        margin-left: 5px;
         display: inline-block;
     }
 
     div.Checkstrings {
-        position: fixed;
+        position: static;
         margin-left: 800px;
-        float: left;
+        margin-top: 10px;
     }
 </style>
 
@@ -88,7 +88,7 @@
             <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
             <li><a data-toggle="tab" href="#RgtoNfa">RG -> NFA</a></li>
             <li><a data-toggle="tab" href="#NfatoRg">NFA -> RG</a></li>
-            <li><a data-toggle="tab" href="helpDoc">Help + Doc</a></li>
+            <li><a data-toggle="tab" href="#helpDoc">Help + Doc</a></li>
         </ul>
 
         <div class="tab-content">
@@ -128,7 +128,7 @@
             <div id="RgtoNfa" class="tab-pane fade">
                 <!-- Input for RG -->
                 <div class="RGinput">
-                    <h5>Regular Grammar (input)</h5>
+                    <h5>Regular Grammar (input - here is &epsilon; symbol to paste when needed)</h5>
                     <table class="table1 table-bordered">
                         <thead>
                             <tr>
@@ -195,28 +195,30 @@
                 <div class="Checkstrings">
                     <table>
                         <tr>
-                            <td><div>
-                                <h5>Check String (input)</h5>
-                                <textarea id="textinput" cols="20" rows="5" style="resize:none;"></textarea>
-                                <br>
-                                <button id="Checkstring1">Check</button>            
-                            </div></td>
+                            <td>
+                                <div>
+                                    <h5>Check String (input)</h5>
+                                    <textarea id="textinput" cols="20" rows="5" style="resize:none;"></textarea>
+                                    <br>
+                                    <button id="Checkstring1">Check</button>
+                                </div>
+                            </td>
                             <td>
                                 <table>
                                     <tr>
-                                        <td style="padding: 0;" id = "z1"></td>
+                                        <td style="padding: 0;" id="z1"></td>
                                     </tr>
                                     <tr>
-                                        <td style="padding: 0;" id = "z2"></td>
+                                        <td style="padding: 0;" id="z2"></td>
                                     </tr>
                                     <tr>
-                                        <td style="padding: 0;" id = "z3"></td>
+                                        <td style="padding: 0;" id="z3"></td>
                                     </tr>
                                     <tr>
-                                        <td style="padding: 0;" id = "z4"></td>
+                                        <td style="padding: 0;" id="z4"></td>
                                     </tr>
                                     <tr>
-                                        <td style="padding: 0;" id = "z5"></td>
+                                        <td style="padding: 0;" id="z5"></td>
                                     </tr>
                                 </table>
                             </td>
@@ -239,11 +241,11 @@
                             <div id="trans_table2"></div>
                         </td>
                     </tr>
-                    </table>
+                </table>
                 <script>
                     $(document).ready(function () {
                         $('#RG_submit').click(function () {
-                            document.getElementById("formal_def").innerHTML = ""; 
+                            document.getElementById("formal_def").innerHTML = "";
                             var check_states = function (a, start, end) {
                                 if (a != start) {
                                     return a;
@@ -284,11 +286,13 @@
                             states = [];
                             states.push(start, st2, st3, st4);
                             list_states = [];
+                            list_states1 = [];
                             list_states_contain = []; // contain how many ways does it contains.
                             let i = 0;
                             while (i < 4) {
                                 if (states[i] != "") {
                                     list_states.push(states[i]);
+                                    list_states1.push(states[i]);
                                 }
                                 i++;
                             }
@@ -299,15 +303,17 @@
                             let list3 = [];
                             alphas = [];
                             pushStack = [];
-                            combined = [[],[]];
+                            combined = [[], []];
                             var vtext = "#v";
+                            var eps = 'ε';
+                            var empt = '∅';
                             i = 1;
                             let j = 1;
                             var contains;
-                            
+
                             while (i < 5) {
-                                combined[i-1] = new Array();
-                                combined[i-1].push(pushStack);
+                                combined[i - 1] = new Array();
+                                combined[i - 1].push(pushStack);
                                 contains = 0;
                                 while (j < 6) {
                                     list1.push($(vtext + i + j).val());
@@ -318,17 +324,17 @@
                                         var stringTempj = stringTemp.match(/[a-z]*/g);
                                         stringTempj = stringTempj.filter(item => item);
                                         if (stringTempj.length != 0) {
-                                            combined[i-1][j-1] = {i: stringTempi, j: stringTempj, index: j, alphas: stringTempj};
+                                            combined[i - 1][j - 1] = { i: stringTempi, j: stringTempj, index: j, alphas: stringTempj };
                                         } else {
-                                            combined[i-1][j-1] = {i: stringTempi, j: stringTempj, index: j, alphas: "ε"};
+                                            combined[i - 1][j - 1] = { i: stringTempi, j: stringTempj, index: j, alphas: "ε" };
                                         }
                                         contains += 1;
                                     } else {
-                                        combined[i-1][j-1] = {i: "&Theta;", j: "&Theta;", index: j, alphas: null};
+                                        combined[i - 1][j - 1] = { i: empt, j: empt, index: j, alphas: null };
                                     }
                                     j++;
                                 }
-                                list_states_contain[i-1] = {state: list_states[i-1], contains: contains};
+                                list_states_contain[i - 1] = { state: list_states[i - 1], contains: contains };
                                 i++;
                                 j = 1;
                             }
@@ -349,12 +355,27 @@
                                             }
                                             w++;
                                         }
+                                        
                                         if (found == 0) {
                                             list2.push(list3[y]);
                                         }
                                         y++;
                                         w = 0;
                                         found = 0;
+                                    }
+                                    if (list3[y] == eps) {//add star to a state with epsilon to mark it as accept state
+                                        if (x < 5) {
+                                            st1 = "*" + st1;
+                                            list_states.splice(0, 1, st1);
+                                        }
+                                        else if (x > 4 && x < 10) {
+                                            st2 = "*" + st2;
+                                            list_states.splice(1, 1, st2);
+                                        }
+                                        else if (x > 9 && x < 15) {
+                                            st3 = "*" + st3;
+                                            list_states.splice(2, 1, st3);
+                                        }
                                     }
                                 }
                                 x++;
@@ -370,7 +391,7 @@
                                 console.log(p + " : " + combined[p].length);
                             }
 
-                            $('#formal_def').append('<p><b>M = (Q, &Sigma;, &delta;, p<sub>0</sub>, F)</b><br>Q ={' + list_states.join(", ") + '}<br>&Sigma; = {' + alphas.join(", ") + '}<br>&delta;: Q &times; &sum;<sub>&epsilon;</sub> &rarr; Pow(Q)<br>p<sub>0</sub> = ' + start + '<br>F = {'+end+'}<p>');
+                            $('#formal_def').append('<p><b>M = (Q, &Sigma;, &delta;, p<sub>0</sub>, F)</b><br>Q ={' + list_states1.join(", ") + '}<br>&Sigma; = {' + alphas.join(", ") + '}<br>&delta;: Q &times; &sum;<sub>&epsilon;</sub> &rarr; Pow(Q)<br>p<sub>0</sub> = ' + start + '<br>F = {' + end + '}<p>');
                             //creating dynamic table for NFA
                             document.getElementById("trans_table").innerHTML = "<table class='table1 table-bordered' id='trans_bordered'></table>";
 
@@ -395,21 +416,21 @@
                                     }
                                 }
                             }
-                            
+
                             // display the table
                             var body = document.body,
-                                tbl  = document.getElementById('trans_bordered');
+                                tbl = document.getElementById('trans_bordered');
 
-                            for(var m = 0; m < list_states.length + 1; m++) {
+                            for (var m = 0; m < list_states.length + 1; m++) {
                                 var tr = tbl.insertRow();
-                                for(var n = 0; n < alphas.length + 1; n++) {
+                                for (var n = 0; n < alphas.length + 1; n++) {
                                     var td = tr.insertCell();
                                     if (n >= 1 && m == 0) {
                                         // put all the variable to the most top of the table
-                                        td.appendChild(document.createTextNode(alphas[n-1]));
+                                        td.appendChild(document.createTextNode(alphas[n - 1]));
                                     } else if (m != 0 && n == 0) {
                                         // put all the state name to the most left of the table
-                                        var compare = list_states[m-1];
+                                        var compare = list_states[m - 1];
                                         if (compare == start) {
                                             // if the state is the initial state
                                             compare = ">" + compare;
@@ -421,41 +442,25 @@
                                         td.appendChild(document.createTextNode(compare));
                                     } else if (n == 0 && m == 0) {
                                         td.appendChild(document.createTextNode(" "));
-                                    }else {
-                                        if (combined[m-1][n-1] != null) {
-                                            td.appendChild(document.createTextNode(combined[m-1][n-1].i));
+                                    } else {
+                                        if (combined[m - 1][n - 1] != null) {
+                                            td.appendChild(document.createTextNode(combined[m - 1][n - 1].i));
                                         }
-                                        // if (n == alphas.length - 1) {
-                                        //     td.appendChild(document.createTextNode(epsilonV[m]));
-                                        // }
-                                        // td.appendChild(document.createTextNode(m + " + " + n));
                                     }
                                 }
                             }
                         });
                         $('#Checkstring1').click(function () {
                             var stringRegex = "/^";
-                            
+
                             var indexStart;
 
-                            for (let i = 0; i < list_states.length; i++) {
-                                if (start == list_states[i]) {
+                            for (let i = 0; i < list_states1.length; i++) {
+                                if (start == list_states1[i]) {
                                     indexStart = i;
                                 }
                             }
 
-                            // var search = start;
-
-                            // for (let i = 0; i < list_states.length; i++) {
-                            //     var search = l.map(function(e) { return e.state; }).indexOf(n);
-                            //     if (search < -1) {
-                            //         var s = c[search];
-                            //         c.splice(search,1);
-                            //         if (l[search].contains < 2) {
-
-                            //         }
-                            //     }
-                            // }
                             var l = list_states_contain;
                             var c = combined;
                             var a = alphas;
@@ -467,11 +472,11 @@
                             console.log("stringRegex : " + stringRegex);
 
                             // console.log("Start : " + indexStart + " : " + combined[indexStart][0].i + " : " + combined[indexStart][0].j);
-                            
+
                             var textInput = $('#textinput').val();
                             var textArr = textInput.split('\n');
                             var rg = regexFunction(stringRegex);
-                            
+
 
                             for (let i = 0; i < textArr.length; i++) {
                                 if (textArr[i].match(rg) != null) {
@@ -479,18 +484,11 @@
                                 } else {
                                     textArr[i] += " -> No!";
                                 }
-                                console.log(textArr[i] + " : " + typeof(textArr[i]));
+                                console.log(textArr[i] + " : " + typeof (textArr[i]));
                             }
-                            // console.log("rg " + rg);
-                            //     if (textInput.match(rg) != null) {
-                            //         textInput += " Ok";
-                            //         console.log(textInput);
-                            //     }
-                            
-                            // document.getElementById('textinput').innerHTML = textInput + "Ok";
                             console.log(textArr.join('\n'));
                             $("#textinput").val(textArr.join('\n'));
-                            
+
                         });
                     });
 
@@ -505,10 +503,10 @@
                             l.forEach(e => {
                                 if (e.state == n) {
                                     console.log(e.state + " : " + n);
-                                    console.log(typeof(e.state) + " " + typeof(n));
+                                    console.log(typeof (e.state) + " " + typeof (n));
                                 }
                             });
-                            var search = l.map(function(e) { return e.state; }).indexOf(n);
+                            var search = l.map(function (e) { return e.state; }).indexOf(n);
                             c.forEach(e => {
                                 console.log(e.i + " : " + e.j);
                             });
@@ -526,7 +524,7 @@
                                     var stringT = "";
                                     s.forEach(e => {
                                         console.log(e.i + " : " + n);
-                                        console.log(typeof(e.state) + " " + typeof(n));
+                                        console.log(typeof (e.state) + " " + typeof (n));
                                         if (e.i != '&Theta;' && e.j != null && e.j != undefined) {
                                             stringT += e.j;
                                             n = String(e.i);
@@ -539,7 +537,7 @@
                                         return "";
                                     }
                                 } else {
-                                    var searchT = s.map(function(e) { return String(e.i); }).indexOf(String(n));
+                                    var searchT = s.map(function (e) { return String(e.i); }).indexOf(String(n));
                                     var stringT = "";
                                     if (searchT != -1) {
                                         stringT += s[searchT].j + "*";
@@ -558,57 +556,16 @@
                                             }
                                         });
                                     }
-                                    // for (let p = 0; p < s.length; p++) {
-                                    //     var stringT;
-                                    //     if (s[p].i != '&Theta;') {
-                                    //         var searchT = s.map(function(e) { return e.i; }).indexOf(l[search].state);
-                                    //         // if(l[search].state == s[p].i) {
-                                    //         //     stringT = stringT + s[p].j + "*";
-                                    //         // } else {
-                                    //         //     stringT = stringT + s[p].j;
-                                    //         //     n = s[p].i;
-                                    //         // }
-                                    //         if (searchT > -1) {
-                                    //             for (let index = 0; index < array.length; index++) {
-                                    //                 const element = array[index];
-                                                    
-                                    //             }
-                                    //         }
-                                    //     }
-                                    // }
                                     console.log(stringT);
                                     return stringT + recurse(l, c, a, i, n);
                                 }
-                                //l.splice(search, 1);
                             }
-                            // for (let p = 0; p < l.length; p++) {
-                            //     if (l[p].state == n) {
-                                    
-                            //     }
-                            // }
-                            // if (l[0].contains < 2) {
-                            //     if (condition) {
-                                    
-                            //     }
-                            //     var s = c[i].shift();
-                            //     for (let k = 0; k < c[i].length; s = c[i].shift()) {
-                            //         if (s.i != l[i].state && s.i != '&Theta;') {
-                            //             return s.i + recurse(l, c, a, i);
-                            //         } else if (s.i == l[i].state && s.i != '&Theta;') {
-                            //             return s.i + "*" + recurse(l, c, a, i);
-                            //         } else {
-                            //             return recurse(l, c, a, i);
-                            //         }
-                            //     }
-                            // }
-                            // var s = l.shift();
-                            // return s.recurse();
                         }
                     }
 
                     function regexFunction(string) {
                         var a = string.split("/");
-                        modifiers= a.pop(); a.shift();
+                        modifiers = a.pop(); a.shift();
                         pattern = a.join("/");
                         return new RegExp(pattern, modifiers);
                     }
@@ -619,8 +576,13 @@
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
             </div>
             <div id="helpDoc" class="tab-pane fade">
-                <h3>Menu 3</h3>
-                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                <h5>Some restrictions applied:</h5>
+                <b><u>For RG to NGA</u></b>
+                <ul>
+                    <li>No row has a repeated variables (e.g. <u>a</u>A| <u>a</u>B <b>or</b> <u>aa</u>B)</li>
+                    <li>Variable cannot be formatted as 'a' (single lowercase)</li>
+                    <li>Variables can only be in 'aB' (lowercase and uppercase) format or 'A' (single uppercase)</li>
+                </ul>
             </div>
         </div>
     </div>
