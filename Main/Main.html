@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -61,8 +60,8 @@
 
     #dynamic_table {
         position: static;
-        margin-top: 6px;
-        margin-left: 5px;
+        margin-top: 10px;
+        margin-right: 190px;
         display: inline-block;
     }
 
@@ -71,19 +70,25 @@
         margin-left: 800px;
         margin-top: 10px;
     }
+
     div.RGtoNFAsteps {
-        margin: 5px;
+        padding: 5px 5px 5px 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
         border: 1px solid #ccc;
-        float: left;
-        width: 180px;
+        width: 450px;
         display: inline-block;
     }
+
     div.NFAtoRGsteps {
-        margin: 5px;
+        padding: 5px 5px 5px 5px;
+        margin-left: 460px;
+        margin-top: -550px;
         border: 1px solid #ccc;
-        float: left;
-        width: 180px;
-        display: inline-block;
+        width: 450px;
+    }
+    #withoutEpsilon{
+        margin-top:7px;
     }
 </style>
 
@@ -376,7 +381,7 @@
                                             }
                                             w++;
                                         }
-                                        
+
                                         if (found == 0) {
                                             list2.push(list3[y]);
                                         }
@@ -561,11 +566,11 @@
                             for (let j = 0; j < a.length; j++) {
                                 const b = a[j];
                                 if (b.alphas == 'ε') {
-                                    woEp.push({start: list_states_contain[i].state, end: b.i});
+                                    woEp.push({ start: list_states_contain[i].state, end: b.i });
                                 }
                             }
                         }
-                        c2.forEach( e => e.pop() );
+                        c2.forEach(e => e.pop());
                         // for (let i = 0; i < combined.length; i++) {
                         //     const a = combined[i];
                         //     for (let j = 0; j < a.length; j++) {
@@ -577,15 +582,15 @@
                         for (let i = 0; i < woEp.length; i++) {
                             const a = woEp[i];
                             //this is the state transition the end with first
-                            var search = list_states_contain.map(function(e) {return String(e.state); }).indexOf(String(a.end));
+                            var search = list_states_contain.map(function (e) { return String(e.state); }).indexOf(String(a.end));
                             for (let j = 0; j < c2[search].length; j++) {
                                 const b = c2[search][j];
                                 const c = String(b.i); //akan dpt S which is from end of epsilon state and cari transition that start with that state.
                                 console.log("C " + c);
                                 const d = b.j; //dpt alphas dia.
                                 console.log("D " + d);
-                                var searchi = list_states_contain.map(function(e) {return String(e.state); }).indexOf(String(a.start)); //search 
-                                var searchj = alphasNoEpsilon.map(function(e) {return String(e);}).indexOf(String(d));
+                                var searchi = list_states_contain.map(function (e) { return String(e.state); }).indexOf(String(a.start)); //search
+                                var searchj = alphasNoEpsilon.map(function (e) { return String(e); }).indexOf(String(d));
                                 if (searchi != -1 && searchj != -1) {
                                     console.log(searchi + " " + searchj);
                                     console.log(c2[searchi][searchj] + " : " + empt);
@@ -602,7 +607,7 @@
                                 const b = (combined2[p] || []).concat();
                                 b.pop();
                                 //search for starting transition for the epsilon which is T
-                                search = b.map(function(e) {return String(e.i); }).indexOf(String(a.start));
+                                search = b.map(function (e) { return String(e.i); }).indexOf(String(a.start));
                                 if (search != -1) {
                                     if (c2[p][search].i != empt) {
                                         console.log("here");
@@ -615,7 +620,7 @@
                         }
 
                         var body = document.body,
-                                tbl = document.getElementById('trans_bordered2');
+                            tbl = document.getElementById('trans_bordered2');
 
                         for (var m = 0; m < list_states.length + 1; m++) {
                             var tr = tbl.insertRow();
@@ -733,27 +738,42 @@
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
             </div>
             <div id="helpDoc" class="tab-pane fade">
-                <div class="RGtoNFAsteps">
-                    <h4>RG -> NFA</h4><br>
-                    <h5><u><b>Steps:</b></u></h5>
-                    <ol>
-                        <li>Enter states under the 'State' column in the Regular Grammar table</li>
-                    </ol>
-                    <h5>Some restrictions applied:</h5>
-                    <b><u>For RG input entry</u></b>
-                    <ul>
-                        <li>No row has a repeated variables (e.g. <u>a</u>A| <u>a</u>B <b>or</b> <u>aa</u>B)</li>
-                        <li>Variable cannot be formatted as 'a' (single lowercase)</li>
-                        <li>Variables can only be in 'aB' (lowercase and uppercase) format or 'A' (single uppercase)</li>
-                    </ul>
-                    <b><u>For RG input entry</u></b>
-                    <ul>
-                        <li>No row has a repeated variables (e.g. <u>a</u>A| <u>a</u>B <b>or</b> <u>aa</u>B)</li>
-                        <li>Variable cannot be formatted as 'a' (single lowercase)</li>
-                        <li>Variables can only be in 'aB' (lowercase and uppercase) format or 'A' (single uppercase)</li>
-                    </ul>
-                </div>
-                <div class="NFAtoRGsteps">
+                <div class="centerwrapper">
+                    <div class="RGtoNFAsteps">
+                        <h4>RG -> NFA</h4>
+                        <h5><u><b>Steps:</b></u></h5>
+                        <ol>
+                            <li>Enter states under the 'State' column in the Regular Grammar table</li>
+                            <li>Enter the related variables to the corresponding state under the 'Variable' column</li>
+                            <li>Click 'Convert RG into NFA' button to see the RG in formal formal definition and transition table</li>
+                            <li>Enter possible inputs in 'Check String' text area. Press 'Enter' to include a new string.</li>
+                            <li>Click the 'Check' button to  verify if the inputs are valid to the finite automaton</li>
+                        </ol>
+                        <br /><b><u><h5>Some restrictions applied:</u></b></h5>
+                        <b>For RG input entry</b>
+                        <ul>
+                            <li>No row has a repeated variables (e.g. <u>a</u>A| <u>a</u>B <b>or</b> <u>aa</u>B)</li>
+                            <li>Variable cannot be formatted as 'a' (single lowercase)</li>
+                            <li>Variables can only be in 'aB' (lowercase and uppercase) format or 'A' (single uppercase)</li>
+                        </ul>
+                        <br /><b>For string input entry</b>
+                        <ul>
+                            <li>Accepts only up to 5 strings for checking</li>
+                            <li>A finite automaton is valid for only one 'check'.</li>
+                        </ul>
+                    </div>
+
+                    <div class="NFAtoRGsteps">
+                        <h4>NFA -> RG</h4>
+                        <h5><u><b>Steps:</b></u></h5>
+                        <ol>
+                            <li>Enter the states and variables in the corresponding cells of the input table</li>
+                            <li>Enter the states and variables in the corresponding cells of the transition table</li>
+                            <li>Click 'Convert NFA into RG' button to see the RG in formal formal definition and transition table</li>
+                            <li>Enter possible inputs in 'Check String' text area</li>
+                            <li>Click the 'Check' button to verify if the inputs are valid to the finite automaton</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
         </div>
