@@ -321,6 +321,7 @@
                             alphas = [];
                             pushStack = [];
                             combined = [[], []];
+                            combined2 = [[], []];
                             var vtext = "#v";
                             i = 1;
                             let j = 1;
@@ -329,6 +330,8 @@
                             while (i < 5) {
                                 combined[i - 1] = new Array();
                                 combined[i - 1].push(pushStack);
+                                combined2[i - 1] = new Array();
+                                combined2[i - 1].push(pushStack);
                                 contains = 0;
                                 while (j < 6) {
                                     list1.push($(vtext + i + j).val());
@@ -340,12 +343,15 @@
                                         stringTempj = stringTempj.filter(item => item);
                                         if (stringTempj.length != 0) {
                                             combined[i - 1][j - 1] = { i: stringTempi, j: stringTempj, index: j, alphas: stringTempj };
+                                            combined2[i - 1][j - 1] = { i: stringTempi, j: stringTempj, index: j, alphas: stringTempj };
                                         } else {
                                             combined[i - 1][j - 1] = { i: stringTempi, j: stringTempj, index: j, alphas: "ε" };
+                                            combined2[i - 1][j - 1] = { i: stringTempi, j: stringTempj, index: j, alphas: "ε" };
                                         }
                                         contains += 1;
                                     } else {
                                         combined[i - 1][j - 1] = { i: empt, j: empt, index: j, alphas: null };
+                                        combined2[i - 1][j - 1] = { i: empt, j: empt, index: j, alphas: null };
                                     }
                                     j++;
                                 }
@@ -422,6 +428,8 @@
                             $('#formal_def').append('<p><b>M = (Q, &Sigma;, &delta;, p<sub>0</sub>, F)</b><br>Q ={' + list_states1.join(", ") + '}<br>&Sigma; = {' + alphas.join(", ") + '}<br>&delta;: Q &times; &sum;<sub>&epsilon;</sub> &rarr; Pow(Q)<br>p<sub>0</sub> = ' + start + '<br>F = {' + accept_list.join(", ") + '}<p>');
                             //creating dynamic table for NFA
                             document.getElementById("trans_table").innerHTML = "<table class='table1 table-bordered' id='trans_bordered'></table>";
+                            $('#trans_table').append('<button id="withoutEpsilon" onClick= "tableWithoutEpsilon()">To NFA without ε</button>')
+
 
                             alphas.push("ε");
 
@@ -444,6 +452,25 @@
                                     }
                                 }
                             }
+
+                            for (let p = 0; p < combined2.length; p++) {
+                                for (let q = 0; q < combined2[p].length; q++) {
+                                    if (combined2[p][q].alphas != alphas[q] && combined2[p][q].j != '&Theta;') {
+                                        var temp = combined2[p][q];
+                                        index = combined2[p][q].index;
+                                        for (let r = q; r < alphas.length; r++) {
+                                            if (combined2[p][q].alphas == alphas[r]) {
+                                                var temp1 = combined2[p][r];
+                                                combined2[p][r] = temp;
+                                                combined2[p][q] = temp1;
+                                                console.log(combined2[p][q].j + " : " + combined2[p][r].j);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
 
                             // display the table
                             var body = document.body,
@@ -519,6 +546,108 @@
 
                         });
                     });
+
+                    function tableWithoutEpsilon() {
+                        // console.log("States " + list_states_contain.forEach(e => { return e.state }));
+                        document.getElementById("trans_table2").innerHTML = "<p>Table without epsilon</p><table class='table1 table-bordered' id='trans_bordered2'></table>";
+                        woEp = [];
+                        c2 = (combined2 || []).concat();;
+                        alphasNoEpsilon = (alphas || []).concat();;
+                        alphasNoEpsilon.pop();
+                        list_states_contain = list_states_contain.filter(item => item);
+                        list_states_contain.forEach(e => { console.log(e) });
+                        for (let i = 0; i < combined2.length; i++) {
+                            const a = combined2[i];
+                            for (let j = 0; j < a.length; j++) {
+                                const b = a[j];
+                                if (b.alphas == 'ε') {
+                                    woEp.push({start: list_states_contain[i].state, end: b.i});
+                                }
+                            }
+                        }
+                        c2.forEach( e => e.pop() );
+                        // for (let i = 0; i < combined.length; i++) {
+                        //     const a = combined[i];
+                        //     for (let j = 0; j < a.length; j++) {
+                        //         const b = a[j];
+                        //         var search = list_states_contain.map(function(e) { return e.state; }).indexOf()
+                        //     }
+                        // }
+
+                        for (let i = 0; i < woEp.length; i++) {
+                            const a = woEp[i];
+                            //this is the state transition the end with first
+                            var search = list_states_contain.map(function(e) {return String(e.state); }).indexOf(String(a.end));
+                            for (let j = 0; j < c2[search].length; j++) {
+                                const b = c2[search][j];
+                                const c = String(b.i); //akan dpt S which is from end of epsilon state and cari transition that start with that state.
+                                console.log("C " + c);
+                                const d = b.j; //dpt alphas dia.
+                                console.log("D " + d);
+                                var searchi = list_states_contain.map(function(e) {return String(e.state); }).indexOf(String(a.start)); //search 
+                                var searchj = alphasNoEpsilon.map(function(e) {return String(e);}).indexOf(String(d));
+                                if (searchi != -1 && searchj != -1) {
+                                    console.log(searchi + " " + searchj);
+                                    console.log(c2[searchi][searchj] + " : " + empt);
+                                    if (c2[searchi][searchj].i != empt) {
+                                        console.log("here");
+                                        c2[searchi][searchj].i = c2[searchi][searchj].i + "," + c;
+                                    } else {
+                                        c2[searchi][searchj].i = c;
+                                    }
+                                }
+                            }
+                            //search dlm 2d array
+                            for (let p = 0; p < combined.length; p++) {
+                                const b = (combined2[p] || []).concat();
+                                b.pop();
+                                //search for starting transition for the epsilon which is T
+                                search = b.map(function(e) {return String(e.i); }).indexOf(String(a.start));
+                                if (search != -1) {
+                                    if (c2[p][search].i != empt) {
+                                        console.log("here");
+                                        c2[p][search].i = c2[p][search].i + "," + a.end;
+                                    } else {
+                                        c2[p][search].i = a.end;
+                                    }
+                                }
+                            }
+                        }
+
+                        var body = document.body,
+                                tbl = document.getElementById('trans_bordered2');
+
+                        for (var m = 0; m < list_states.length + 1; m++) {
+                            var tr = tbl.insertRow();
+                            for (var n = 0; n < alphasNoEpsilon.length + 1; n++) {
+                                var td = tr.insertCell();
+                                if (n >= 1 && m == 0) {
+                                    // put all the variable to the most top of the table
+                                    td.appendChild(document.createTextNode(alphas[n - 1]));
+                                } else if (m != 0 && n == 0) {
+                                    // put all the state name to the most left of the table
+                                    var compare = list_states[m - 1];
+                                    if (compare == start) {
+                                        // if the state is the initial state
+                                        compare = ">" + compare;
+                                    }
+                                    if (compare == end) {
+                                        // if the state is the final state
+                                        compare = "*" + compare;
+                                    }
+                                    td.appendChild(document.createTextNode(compare));
+                                } else if (n == 0 && m == 0) {
+                                    td.appendChild(document.createTextNode(" "));
+                                } else {
+                                    if (combined[m - 1][n - 1] != null) {
+                                        td.appendChild(document.createTextNode(c2[m - 1][n - 1].i));
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
 
                     function recurse(l, c, a, i, n) {
                         if (l === undefined) {
