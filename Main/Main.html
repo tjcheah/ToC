@@ -243,6 +243,8 @@
                     </tr>
                 </table>
                 <script>
+                    var eps = 'ε';
+                    var empt = '∅';
                     $(document).ready(function () {
                         $('#RG_submit').click(function () {
                             document.getElementById("formal_def").innerHTML = "";
@@ -305,8 +307,6 @@
                             pushStack = [];
                             combined = [[], []];
                             var vtext = "#v";
-                            var eps = 'ε';
-                            var empt = '∅';
                             i = 1;
                             let j = 1;
                             var contains;
@@ -525,7 +525,7 @@
                                     s.forEach(e => {
                                         console.log(e.i + " : " + n);
                                         console.log(typeof (e.state) + " " + typeof (n));
-                                        if (e.i != '&Theta;' && e.j != null && e.j != undefined) {
+                                        if (e.i != empt && e.j != null && e.j != undefined) {
                                             stringT += e.j;
                                             n = String(e.i);
                                         }
@@ -543,14 +543,14 @@
                                         stringT += s[searchT].j + "*";
                                         s.splice(searchT, 1);
                                         for (let p = 0; p < s.length; p++) {
-                                            if (s[p].i != '&Theta;') {
+                                            if (s[p].i != empt) {
                                                 stringT += s[p].j;
                                                 n = String(s[p].i);
                                             }
                                         }
                                     } else {
                                         s.forEach(e => {
-                                            if (e.i != '&Theta;') {
+                                            if (e.i != empt) {
                                                 stringT += e.j;
                                                 n = String(e.i);
                                             }
@@ -576,6 +576,13 @@
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
             </div>
             <div id="helpDoc" class="tab-pane fade">
+                <div class="RGtoNFAsteps">
+                </div>
+                <div class="RGtoNFAsteps">
+                </div>
+                <div class="NFAtoRGsteps">
+
+                </div>
                 <h5>Some restrictions applied:</h5>
                 <b><u>For RG to NGA</u></b>
                 <ul>
